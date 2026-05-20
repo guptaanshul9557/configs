@@ -1,0 +1,42 @@
+---
+ReportDefinitions:
+  - reportName: billCountReport
+    summary: Bill Count Report
+    version: 1.0.0
+    moduleName: rainmaker-fin
+    sourceColumns:
+      - name: bill_date
+        label: Bill Date
+        type: string
+        source: lba
+        total: false
+      - name: total_amount
+        label: Total Amount
+        type: number
+        source: lba
+        total: true
+        rowTotal : true
+      - name: bill_count
+        label: Bill Count
+        type: number
+        source: lba
+        total: true
+        rowTotal : true
+    searchParams:
+      - name: schema_name
+        label: Schema Name
+        type: singlevaluelist
+        pattern: 'list://jmc:Jammu Municipal Corporation,smc:Srinagar Municipal Corporation'
+        source: lba
+        isMandatory: true
+        searchClause: AND lba.schema_name = $schema_name
+    query: >
+      SELECT
+        lba.bill_date,
+        lba.total_amount,
+        lba.bill_count
+      FROM
+        live_bills_all lba
+      WHERE
+        1=1
+    orderby: ORDER By bill_date desc    
