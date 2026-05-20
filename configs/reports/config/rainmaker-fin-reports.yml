@@ -7,7 +7,7 @@ ReportDefinitions:
     sourceColumns:
       - name: bill_date
         label: Bill Date
-        type: string
+        type: epoch
         source: lba
         total: false
       - name: total_amount
