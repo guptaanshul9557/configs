@@ -15,13 +15,13 @@ ReportDefinitions:
         type: number
         source: lba
         total: true
-        rowTotal : true
+        rowTotal: true
       - name: bill_count
         label: Bill Count
         type: number
         source: lba
         total: true
-        rowTotal : true
+        rowTotal: true
     searchParams:
       - name: schema_name
         label: Schema Name
@@ -39,4 +39,50 @@ ReportDefinitions:
         live_bills_all lba
       WHERE
         1=1
-    orderby: ORDER By bill_date desc    
+    orderby: ORDER By bill_date desc
+
+  - reportName: collectionReport
+    summary: Collection Report
+    version: 1.0.0
+    moduleName: rainmaker-fin
+    sourceColumns:
+      - name: created_date
+        label: Created Date
+        type: date
+        source: ei
+        total: false
+      - name: transaction_count
+        label: Transaction Count
+        type: number
+        source: ei
+        total: true
+        rowTotal: true
+      - name: total_amount
+        label: Total Amount
+        type: number
+        source: ei
+        total: true
+        rowTotal: true
+    searchParams:
+      - name: fromDate
+        label: From Date
+        type: date
+        source: ei
+        isMandatory: false
+        searchClause: AND DATE(ei.createddate) >= $fromDate
+      - name: toDate
+        label: To Date
+        type: date
+        source: ei
+        isMandatory: false
+        searchClause: AND DATE(ei.createddate) <= $toDate
+    query: >
+      SELECT
+        DATE(ei.createddate) AS created_date,
+        COUNT(*) AS transaction_count,
+        SUM(ei.amount) AS total_amount
+      FROM
+        egf_instrument ei
+      WHERE
+        1=1
+    orderby: ORDER BY created_date desc
