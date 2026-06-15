@@ -69,13 +69,13 @@ ReportDefinitions:
         type: epoch
         source: ei
         isMandatory: false
-        searchClause: AND DATE(ei.createddate) >= TO_DATE(TO_CHAR(TO_TIMESTAMP($fromDate::bigint / 1000), 'YYYY-MM-DD'), 'YYYY-MM-DD')
+        searchClause: AND DATE(ei.createddate) >= :fromDate::date
       - name: toDate
         label: To Date
         type: epoch
         source: ei
         isMandatory: false
-        searchClause: AND DATE(ei.createddate) <= TO_DATE(TO_CHAR(TO_TIMESTAMP($toDate::bigint / 1000), 'YYYY-MM-DD'), 'YYYY-MM-DD')
+        searchClause: AND DATE(ei.createddate) <= :toDate::date
     query: >
       SELECT
         DATE(ei.createddate) AS created_date,
@@ -85,4 +85,5 @@ ReportDefinitions:
         egf_instrument ei
       WHERE
         1=1
+    groupby : GROUP BY DATE(ei.createddate)    
     orderby: ORDER BY created_date desc
