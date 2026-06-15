@@ -66,16 +66,16 @@ ReportDefinitions:
     searchParams:
       - name: fromDate
         label: From Date
-        type: date
+        type: epoch
         source: ei
         isMandatory: false
-        searchClause: AND DATE(ei.createddate) >= $fromDate
+        searchClause: AND DATE(ei.createddate) >= TO_DATE(TO_CHAR(TO_TIMESTAMP($fromDate::bigint / 1000), 'YYYY-MM-DD'), 'YYYY-MM-DD')
       - name: toDate
         label: To Date
-        type: date
+        type: epoch
         source: ei
         isMandatory: false
-        searchClause: AND DATE(ei.createddate) <= $toDate
+        searchClause: AND DATE(ei.createddate) <= TO_DATE(TO_CHAR(TO_TIMESTAMP($toDate::bigint / 1000), 'YYYY-MM-DD'), 'YYYY-MM-DD')
     query: >
       SELECT
         DATE(ei.createddate) AS created_date,
