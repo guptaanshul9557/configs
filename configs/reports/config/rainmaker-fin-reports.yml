@@ -69,13 +69,13 @@ ReportDefinitions:
         type: date
         source: ei
         isMandatory: false
-        searchClause: AND DATE(ei.createddate) >= $fromDate
+        searchClause: AND ei.createddate >= TO_TIMESTAMP($fromDate / 1000)
       - name: toDate
         label: To Date
         type: date
         source: ei
         isMandatory: false
-        searchClause: AND DATE(ei.createddate) <= $toDate
+        searchClause: AND ei.createddate <= TO_TIMESTAMP($toDate / 1000)
     query: >
       SELECT
         DATE(ei.createddate) AS created_date,
