@@ -51,7 +51,7 @@ ReportDefinitions:
         type: epoch
         source: ei
         total: false
-      - name: tenantid
+      - name: tenant
         label: Tenant Id
         type: string
         source: ei
@@ -89,9 +89,12 @@ ReportDefinitions:
           SUM(ei.amount) AS total_amount
           FROM
           egf_instrument ei
-    orderby:  GROUP BY
+    groupby: >
+          GROUP BY
           DATE(ei.createddate),
           UPPER(SPLIT_PART(ei.tenantid, '.', 2))
-    orderby: ORDER BY
-          created_date DESC,
-          tenant;
+
+    orderby: >
+         ORDER BY
+         created_date DESC,
+         tenant
