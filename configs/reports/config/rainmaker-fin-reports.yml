@@ -84,12 +84,14 @@ ReportDefinitions:
     query: >
           SELECT
           DATE(ei.createddate) AS created_date,
-          ei.tenantid AS tenantid,
+          UPPER(SPLIT_PART(ei.tenantid, '.', 2)) AS tenant,
           COUNT(*) AS transaction_count,
           SUM(ei.amount) AS total_amount
           FROM
           egf_instrument ei
-          WHERE
-          1=1
-    groupby: GROUP BY DATE(ei.createddate), ei.tenantid
-    orderby: ORDER BY created_date DESC, tenantid
+    orderby:  GROUP BY
+          DATE(ei.createddate),
+          UPPER(SPLIT_PART(ei.tenantid, '.', 2))
+    orderby: ORDER BY
+          created_date DESC,
+          tenant;
