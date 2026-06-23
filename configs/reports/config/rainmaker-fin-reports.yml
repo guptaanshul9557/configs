@@ -91,5 +91,5 @@ ReportDefinitions:
           egf_instrument ei
           WHERE
           1=1
-          groupby: GROUP BY DATE(ei.createddate), ei.tenantid
-          orderby: ORDER BY created_date DESC, tenantid
+    groupby: GROUP BY DATE(ei.createddate), ei.tenantid
+    orderby: ORDER BY created_date DESC, tenantid
