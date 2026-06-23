@@ -87,8 +87,8 @@ ReportDefinitions:
           UPPER(SPLIT_PART(ei.tenantid, '.', 2)) AS tenant,
           COUNT(*) AS transaction_count,
           SUM(ei.amount) AS total_amount
-          FROM
-          egf_instrument ei
+          FROM egf_instrument ei
+          WHERE 1=1
     groupby: >
           GROUP BY
           DATE(ei.createddate),
