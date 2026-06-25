@@ -22,6 +22,12 @@ ReportDefinitions:
         source: lba
         total: true
         rowTotal: true
+      - name: ulb
+        label: ULB Name
+        type: string
+        source: lba
+        total: false
+        rowTotal: false
     searchParams:
       - name: schema_name
         label: Schema Name
@@ -30,11 +36,24 @@ ReportDefinitions:
         source: lba
         isMandatory: true
         searchClause: AND lba.schema_name = $schema_name
+      - name: fromDate
+        label: From Date
+        type: epoch
+        source: lba
+        isMandatory: false
+        searchClause: AND lba.bill_date >= TO_TIMESTAMP($fromDate / 1000)
+      - name: toDate
+        label: To Date
+        type: epoch
+        source: lba
+        isMandatory: false
+        searchClause: AND lba.bill_date <= TO_TIMESTAMP($toDate / 1000)
     query: >
       SELECT
         lba.bill_date,
         lba.total_amount,
-        lba.bill_count
+        lba.bill_count,
+        UPPER(lba.schema_name) as ulb
       FROM
         live_bills_all lba
       WHERE
